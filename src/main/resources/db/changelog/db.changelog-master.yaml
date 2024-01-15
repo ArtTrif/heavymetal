@@ -5,3 +5,5 @@ databaseChangeLog:
     file: db/000-createSportsmanTable.sql
 - include:
       file: db/001-createSubscriptionTable.sql
+- include:
+    file: db/002-createPurchasedSubscription.sql

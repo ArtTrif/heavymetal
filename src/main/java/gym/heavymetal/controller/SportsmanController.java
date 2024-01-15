@@ -37,8 +37,7 @@ public class SportsmanController {
 
     @PutMapping
     public ResponseEntity<SportsmanDto> update(@RequestBody SportsmanDto sportsmanDto) {
-        var a = sportsmanConverter.toEntity(sportsmanDto);
-        SportsmanEntity sportsman = sportsmanService.update(a);
+        SportsmanEntity sportsman = sportsmanService.update(sportsmanConverter.toEntity(sportsmanDto));
         return ResponseEntity.ok(sportsmanConverter.toDto(sportsman));
     }
 
