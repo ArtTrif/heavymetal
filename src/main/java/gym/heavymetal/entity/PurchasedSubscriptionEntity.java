@@ -38,4 +38,7 @@ public class PurchasedSubscriptionEntity {
     private LocalDateTime stoppedDate;
 
     private BigDecimal paid;
+
+    @Column(columnDefinition = "boolean default true")
+    private boolean active;
 }

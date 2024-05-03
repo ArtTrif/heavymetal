@@ -5,6 +5,7 @@ import gym.heavymetal.dto.SportsmanDto;
 import gym.heavymetal.entity.SportsmanEntity;
 import gym.heavymetal.service.SportsmanService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,35 +16,41 @@ import java.util.UUID;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/sportsman")
+@Slf4j
 public class SportsmanController {
-    private final SportsmanService sportsmanService;
-    private final SportsmanConverter sportsmanConverter;
+    private final SportsmanService service;
+    private final SportsmanConverter converter;
 
     @GetMapping
     public ResponseEntity<List<SportsmanDto>> getAll() {
-        return ResponseEntity.ok(sportsmanConverter.toDto(sportsmanService.getAll()));
+        log.info("Получение всех спортсменов");
+        return ResponseEntity.ok(converter.toDto(service.getAll()));
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<SportsmanDto> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(sportsmanConverter.toDto(sportsmanService.getById(id)));
+        return ResponseEntity.ok(converter.toDto(service.getById(id)));
     }
 
     @PostMapping
     public ResponseEntity<SportsmanDto> create(@RequestBody SportsmanDto sportsmanDto) {
-        SportsmanEntity sportsman = sportsmanService.save(sportsmanConverter.toEntity(sportsmanDto));
-        return ResponseEntity.ok(sportsmanConverter.toDto(sportsman));
+        log.info("Добавление спортсмена. Имя: {}, Фамилия: {}, Баркод: {}",
+                sportsmanDto.name(), sportsmanDto.surname(), sportsmanDto.barcode());
+
+        SportsmanEntity sportsman = service.save(converter.toEntity(sportsmanDto));
+        return ResponseEntity.ok(converter.toDto(sportsman));
     }
 
     @PutMapping
     public ResponseEntity<SportsmanDto> update(@RequestBody SportsmanDto sportsmanDto) {
-        SportsmanEntity sportsman = sportsmanService.update(sportsmanConverter.toEntity(sportsmanDto));
-        return ResponseEntity.ok(sportsmanConverter.toDto(sportsman));
+        SportsmanEntity sportsman = service.update(converter.toEntity(sportsmanDto));
+        return ResponseEntity.ok(converter.toDto(sportsman));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UUID> deleteById(@PathVariable UUID id) {
-        return ResponseEntity.ok(sportsmanService.deleteById(id));
+        return ResponseEntity.ok(service.deleteById(id));
     }
 
 }

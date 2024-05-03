@@ -6,4 +6,8 @@ databaseChangeLog:
 - include:
       file: db/001-createSubscriptionTable.sql
 - include:
-    file: db/002-createPurchasedSubscription.sql
+    file: db/002-createPurchasedSubscriptionTable.sql
+- include:
+    file: db/003-createVisitsTable.sql
+- include:
+    file: db/004-createDiscountByCountVisitsTable.sql

@@ -8,7 +8,9 @@ public record PurchasedSubscriptionDto (
         UUID id,
         UUID sportsmanId,
         UUID subscriptionId,
+        String subscriptionName,
         LocalDateTime startedDate,
         LocalDateTime stoppedDate,
-        BigDecimal paid
+        BigDecimal paid,
+        Boolean active
 ){}

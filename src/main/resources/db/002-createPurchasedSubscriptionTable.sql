@@ -12,5 +12,6 @@ create table purchased_subscription
             references subscription,
     started_date timestamp not null,
     stopped_date timestamp,
-    paid decimal (10,2)
+    paid decimal (10,2),
+    active boolean default true
 )

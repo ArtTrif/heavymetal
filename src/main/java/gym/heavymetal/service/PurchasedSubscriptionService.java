@@ -21,6 +21,10 @@ public class PurchasedSubscriptionService {
         return purchasedSubscriptionRepository.findAll();
     }
 
+    public List<PurchasedSubscriptionEntity> getAllByActive(UUID sportsmanId, Boolean active) {
+        return purchasedSubscriptionRepository.findAllBySportsmanIdAndActive(sportsmanId, active);
+    }
+
     public PurchasedSubscriptionEntity getById(UUID id) {
         return purchasedSubscriptionRepository.findById(id).orElse(null);
     }

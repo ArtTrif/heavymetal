@@ -1,6 +1,5 @@
 package gym.heavymetal.entity;
 
-import gym.heavymetal.dto.CountVisits;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,28 +7,29 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "subscription")
+@Table(name = "visits")
 @RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
-public class SubscriptionEntity {
+public class VisitsEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "sportsman_id", nullable = false)
+    private SportsmanEntity sportsman;
 
-    @Column(name = "count_visits")
-    private Integer countVisits;
+    @ManyToOne
+    @JoinColumn(name = "purchased_subscription_id", nullable = false)
+    private PurchasedSubscriptionEntity purchasedSubscription;
 
-    private BigDecimal price;
-
-    @Column(name = "action_time")
-    private Integer actionTime;
+    @Column(name = "created_date", nullable = false)
+    private LocalDateTime createdDate;
 }

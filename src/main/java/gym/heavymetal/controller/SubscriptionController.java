@@ -17,33 +17,33 @@ import java.util.UUID;
 @RequestMapping("/api/subscription")
 public class SubscriptionController {
 
-    private final SubscriptionService subscriptionService;
-    private final SubscriptionConverter subscriptionConverter;
+    private final SubscriptionService service;
+    private final SubscriptionConverter converter;
 
     @GetMapping
     public ResponseEntity<List<SubscriptionDto>> getAll() {
-        return ResponseEntity.ok(subscriptionConverter.toDto(subscriptionService.getAll()));
+        return ResponseEntity.ok(converter.toDto(service.getAll()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SubscriptionDto> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(subscriptionConverter.toDto(subscriptionService.getById(id)));
+        return ResponseEntity.ok(converter.toDto(service.getById(id)));
     }
 
     @PostMapping
     public ResponseEntity<SubscriptionDto> create(@RequestBody SubscriptionDto subscriptionDto) {
-        SubscriptionEntity subscriptionEntity = subscriptionService.save(subscriptionConverter.toEntity(subscriptionDto));
-        return ResponseEntity.ok(subscriptionConverter.toDto(subscriptionEntity));
+        SubscriptionEntity subscriptionEntity = service.save(converter.toEntity(subscriptionDto));
+        return ResponseEntity.ok(converter.toDto(subscriptionEntity));
     }
 
     @PutMapping
     public ResponseEntity<SubscriptionDto> update(@RequestBody SubscriptionDto subscriptionDto) {
-        SubscriptionEntity subscription = subscriptionService.update(subscriptionConverter.toEntity(subscriptionDto));
-        return ResponseEntity.ok(subscriptionConverter.toDto(subscription));
+        SubscriptionEntity subscription = service.update(converter.toEntity(subscriptionDto));
+        return ResponseEntity.ok(converter.toDto(subscription));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UUID> deleteById(@PathVariable UUID id) {
-        return ResponseEntity.ok(subscriptionService.deleteById(id));
+        return ResponseEntity.ok(service.deleteById(id));
     }
 }

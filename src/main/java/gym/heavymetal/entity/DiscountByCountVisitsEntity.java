@@ -1,6 +1,5 @@
 package gym.heavymetal.entity;
 
-import gym.heavymetal.dto.CountVisits;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,28 +7,23 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "subscription")
+@Table(name = "discount_by_count_visits")
 @RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
-public class SubscriptionEntity {
+public class DiscountByCountVisitsEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String name;
+    @Column(name = "percent")
+    private Integer percent;
 
     @Column(name = "count_visits")
     private Integer countVisits;
-
-    private BigDecimal price;
-
-    @Column(name = "action_time")
-    private Integer actionTime;
 }

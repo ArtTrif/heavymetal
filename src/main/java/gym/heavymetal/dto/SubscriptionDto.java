@@ -6,7 +6,7 @@ import java.util.UUID;
 public record SubscriptionDto (
      UUID id,
      String name,
-     CountVisits countVisits,
+     Integer countVisits,
      BigDecimal price,
      Integer actionTime
 ){}

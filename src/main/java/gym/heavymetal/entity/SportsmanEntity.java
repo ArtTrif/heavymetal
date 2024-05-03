@@ -9,7 +9,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "sportsman")
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString

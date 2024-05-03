@@ -16,36 +16,41 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/api/subscription/purchased")
 public class PurchasedSubscriptionController {
-    private final PurchasedSubscriptionService purchasedSubscriptionService;
-    private final PurchasedSubscriptionConverter purchasedSubscriptionConverter;
+    private final PurchasedSubscriptionService service;
+    private final PurchasedSubscriptionConverter converter;
 
     @GetMapping
     public ResponseEntity<List<PurchasedSubscriptionDto>> getAll() {
-        return ResponseEntity.ok(purchasedSubscriptionConverter.toDto(purchasedSubscriptionService.getAll()));
+        return ResponseEntity.ok(converter.toDto(service.getAll()));
+    }
+
+    @GetMapping("/bySportsman/{sportsmanId}")
+    public ResponseEntity<List<PurchasedSubscriptionDto>> getAllByActive(@PathVariable UUID sportsmanId, @RequestParam Boolean active) {
+        return ResponseEntity.ok(converter.toDto(service.getAllByActive(sportsmanId, active)));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PurchasedSubscriptionDto> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(purchasedSubscriptionConverter.toDto(purchasedSubscriptionService.getById(id)));
+        return ResponseEntity.ok(converter.toDto(service.getById(id)));
     }
 
     @PostMapping
     public ResponseEntity<PurchasedSubscriptionDto> create(@RequestBody PurchasedSubscriptionDto purchasedSubscriptionDto) {
         PurchasedSubscriptionEntity purchasedSubscriptionEntity =
-                purchasedSubscriptionService.save(purchasedSubscriptionConverter.toEntity(purchasedSubscriptionDto));
-        return ResponseEntity.ok(purchasedSubscriptionConverter.toDto(purchasedSubscriptionEntity));
+                service.save(converter.toEntity(purchasedSubscriptionDto));
+        return ResponseEntity.ok(converter.toDto(purchasedSubscriptionEntity));
     }
 
     @PutMapping
     public ResponseEntity<PurchasedSubscriptionDto> update(@RequestBody PurchasedSubscriptionDto purchasedSubscriptionDto) {
-        var purchasedSubscriptionEntity = purchasedSubscriptionConverter.toEntity(purchasedSubscriptionDto);
+        var purchasedSubscriptionEntity = converter.toEntity(purchasedSubscriptionDto);
         return ResponseEntity.ok(
-                purchasedSubscriptionConverter.toDto(purchasedSubscriptionService.update(purchasedSubscriptionEntity))
+                converter.toDto(service.update(purchasedSubscriptionEntity))
         );
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UUID> deleteById(@PathVariable UUID id) {
-        return ResponseEntity.ok(purchasedSubscriptionService.deleteById(id));
+        return ResponseEntity.ok(service.deleteById(id));
     }
 }
